@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:nueva_app/src/config/menu/menu_items.dart';
 
 class HomeScreen extends StatelessWidget {
+  static const name = 'home_screen';
+
   const HomeScreen({super.key});
 
   @override
@@ -44,10 +46,8 @@ class _CustomListTile extends StatelessWidget {
       trailing: Icon(Icons.arrow_forward_ios_rounded, color: colors.primary),
       title: Text(menuItem.title),
       subtitle: Text(menuItem.subTitle),
-      onTap: (){
+      onTap: () {
         context.push(menuItem.link);
-              
-
       },
     );
   }

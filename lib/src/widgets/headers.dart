@@ -41,7 +41,7 @@ class HeaderDiagonal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: double.infinity,
       width: double.infinity,
       // color: Color(0xff615AAB),
@@ -87,7 +87,7 @@ class HeaderTriangular extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: double.infinity,
       width: double.infinity,
       // color: Color(0xff615AAB),
@@ -133,7 +133,7 @@ class HeaderPico extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: double.infinity,
       width: double.infinity,
       // color: Color(0xff615AAB),
@@ -179,7 +179,7 @@ class HeaderCurvo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: double.infinity,
       width: double.infinity,
       // color: Color(0xff615AAB),
@@ -230,7 +230,7 @@ class HeaderWave extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: double.infinity,
       width: double.infinity,
       // color: Color(0xff615AAB),
@@ -287,7 +287,7 @@ class HeaderWaveGradient extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: double.infinity,
       width: double.infinity,
       // color: Color(0xff615AAB),
@@ -299,11 +299,11 @@ class HeaderWaveGradient extends StatelessWidget {
 class _HeaderWaveGradientPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final Rect rect = new Rect.fromCircle(
+    final Rect rect = Rect.fromCircle(
       center: Offset(0.0, 155.0),
       radius: 180,
     );
-    final Gradient gradiente = new LinearGradient(
+    final Gradient gradiente = LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
       colors: <Color>[Color(0xff6D05E8), Color(0xffC012FF), Color(0xff6D05FA)],
@@ -359,7 +359,7 @@ class HeaderPicoCusco extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: double.infinity,
       width: double.infinity,
       // color: Color(0xff615AAB),
