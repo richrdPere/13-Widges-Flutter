@@ -7,3 +7,5 @@ export 'package:nueva_app/src/presentation/screens/infinite_scroll/infinite_scro
 export 'package:nueva_app/src/presentation/screens/progress/progress_screen.dart';
 export 'package:nueva_app/src/presentation/screens/snackbar/snackbar_screen.dart';
 export 'package:nueva_app/src/presentation/screens/ui_controls/ui_controls_screen.dart';
+
+export 'package:nueva_app/src/presentation/screens/counter/counter_screen.dart';
