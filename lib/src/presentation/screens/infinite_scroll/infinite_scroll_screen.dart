@@ -25,7 +25,8 @@ class _InfiniteScrollScreenState extends State<InfiniteScrollScreen> {
       if ((scrollController.position.pixels + 500) >=
           scrollController.position.maxScrollExtent) {
         // Load next page
-        addFiveImages();
+        // addFiveImages();
+        loadNextPage();
       }
     });
   }
@@ -46,16 +47,46 @@ class _InfiniteScrollScreenState extends State<InfiniteScrollScreen> {
 
     addFiveImages();
     isLoading = false;
+
     if (!isMounted) return;
     setState(() {});
 
-    // TODO: Mover scroll
+    moveScrollToBottom();
+  }
+
+  Future<void> onRefresh() async {
+    isLoading = true;
+    setState(() {});
+
+    await Future.delayed(const Duration(seconds: 3));
+    if (!isMounted) return;
+
+    isLoading = false;
+    final lastId = imagesIds.last;
+    imagesIds.clear();
+    imagesIds.add(lastId + 1);
+    addFiveImages();
+
+    setState(() {});
+  }
+
+  void moveScrollToBottom() {
+    if (scrollController.position.pixels + 100 <=
+        scrollController.position.maxScrollExtent) {
+      return;
+    }
+
+    scrollController.animateTo(
+      scrollController.position.pixels + 120,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.fastOutSlowIn,
+    );
   }
 
   void addFiveImages() {
     final lastId = imagesIds.last;
     imagesIds.addAll([1, 2, 3, 4, 5].map((e) => lastId + e));
-    setState(() {});
+    // setState(() {});
   }
 
   @override
@@ -66,50 +97,25 @@ class _InfiniteScrollScreenState extends State<InfiniteScrollScreen> {
         context: context,
         removeTop: true,
         removeBottom: true,
-        child: ListView.builder(
-          itemCount: imagesIds.length,
-          itemBuilder: (context, index) {
-            return FadeInImage(
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: 300,
-              placeholder: const AssetImage('assets/images/jar-loading.gif'),
-              image: NetworkImage(
-                'https://picsum.photos/id/${imagesIds[index]}/500/300',
-              ),
-            );
-
-            // return FadeInImage(
-            //   fit: BoxFit.cover,
-            //   width: double.infinity,
-            //   height: 300,
-            //   placeholder: const AssetImage('assets/images/jar-loading.gif'),
-            //   image: NetworkImage('https://picsum.photos/id/${imagesIds[index]}/500/300'),);
-
-            // return Image.network(
-            //   'https://picsum.photos/id/${imagesIds[index]}/500/300',
-            //   width: double.infinity,
-            //   height: 300,
-            //   fit: BoxFit.cover,
-            //   loadingBuilder: (context, child, loadingProgress) {
-            //     if (loadingProgress == null) return child;
-
-            //     return SizedBox(
-            //       height: 300,
-            //       child: Center(
-            //         child: Image.asset(
-            //           'assets/images/jar-loading.gif',
-            //           width: 80,
-            //         ),
-            //       ),
-            //     );
-            //   },
-            //   errorBuilder: (_, __, ___) => const SizedBox(
-            //     height: 300,
-            //     child: Center(child: Icon(Icons.error, color: Colors.white)),
-            //   ),
-            // );
-          },
+        child: RefreshIndicator(
+          onRefresh: () => onRefresh(),
+          edgeOffset: 10,
+          strokeWidth: 2,
+          child: ListView.builder(
+            controller: scrollController,
+            itemCount: imagesIds.length,
+            itemBuilder: (context, index) {
+              return FadeInImage(
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: 300,
+                placeholder: const AssetImage('assets/images/jar-loading.gif'),
+                image: NetworkImage(
+                  'https://picsum.photos/id/${imagesIds[index]}/500/300',
+                ),
+              );
+            },
+          ),
         ),
       ),
 
@@ -121,7 +127,7 @@ class _InfiniteScrollScreenState extends State<InfiniteScrollScreen> {
                 infinite: true,
                 child: const Icon(Icons.refresh_rounded),
               )
-            : const Icon(Icons.arrow_back_ios_new_outlined),
+            : FadeIn(child: const Icon(Icons.arrow_back_ios_new_outlined)),
       ),
     );
   }
